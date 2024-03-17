@@ -31,7 +31,7 @@ namespace MovieAPI.Controllers
             if(foundMovie == null)
                 return NotFound($"Movie with ID {id} not found");
             
-            var foundMovieDto = MovieMapper.ToMovieDto(foundMovie);
+            var foundMovieDto = MovieMapper.ToMovieDtoByID(foundMovie);
             return Ok(foundMovieDto);
         }
 

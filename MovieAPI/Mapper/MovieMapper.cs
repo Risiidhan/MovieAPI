@@ -15,8 +15,18 @@ namespace MovieAPI.Mapper
             Name = movie.Name,
             ReleasedYear = movie.ReleasedYear,
             IsMyFavourite = movie.IsMyFavourite,
-            ActorsList = movie.ActorsList,
-            Actors = movie.Actors.ToList()
+            LeadActor = movie.LeadActor != null ? ActorMapper.ToActorDto(movie.LeadActor) : null
+
+        };
+
+        public static movieDtoByID ToMovieDtoByID(Movie movie) => new movieDtoByID
+        {
+            Id = movie.Id,
+            Name = movie.Name,
+            ReleasedYear = movie.ReleasedYear,
+            IsMyFavourite = movie.IsMyFavourite,
+            LeadActor = movie.LeadActor != null ? ActorMapper.ToActorDtoByID(movie.LeadActor) : null
+
         };
 
         public static Movie ToMovieModel(movieDtoCreate movieCreateDto) => new Movie
@@ -24,7 +34,7 @@ namespace MovieAPI.Mapper
             Name = movieCreateDto.Name,
             ReleasedYear = movieCreateDto.ReleasedYear,
             IsMyFavourite = movieCreateDto.IsMyFavourite,
-            ActorsList = movieCreateDto.ActorsList
+            LeadActorID = movieCreateDto.LeadActorID
         };
 
         public static Movie ToMovieModel(movieDtoUpdate movieUpdateDto) => new Movie
@@ -32,7 +42,7 @@ namespace MovieAPI.Mapper
             Name = movieUpdateDto.Name,
             ReleasedYear = movieUpdateDto.ReleasedYear,
             IsMyFavourite = movieUpdateDto.IsMyFavourite,
-            Actors = movieUpdateDto.Actors
+            LeadActorID = movieUpdateDto.LeadActorID
         };
     }
 }

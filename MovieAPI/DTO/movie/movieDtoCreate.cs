@@ -10,7 +10,7 @@ namespace MovieAPI.DTO.movie
         public required string Name { get; set; }
         public int? ReleasedYear { get; set; }
         public bool? IsMyFavourite { get; set; }
-        public List<int> ActorsList { get; set; } = new List<int>();
+         public int LeadActorID { get; set; }
 
     }
 }

@@ -24,12 +24,9 @@ namespace MovieAPI.Repositores
             if (movie == null)
                 throw new ArgumentNullException(nameof(movie));
 
-            foreach (var actorID in movie.ActorsList)
-            {
-                var foundActor = await _context.Actor.FirstOrDefaultAsync(a=> a.Id == actorID);
-                if(foundActor == null)
-                    throw new ArgumentException($"Actor with ID {actorID} not found");
-            }
+            var foundActor = await _context.Actor.FirstOrDefaultAsync(a => a.Id == movie.LeadActorID);
+            if (foundActor == null)
+                throw new ArgumentException($"Actor with ID {movie.LeadActorID} not found");
 
             await _context.Movie.AddAsync(movie);
             await _context.SaveChangesAsync();
@@ -50,13 +47,13 @@ namespace MovieAPI.Repositores
 
         public async Task<List<Movie>> GetAllMovieAsync()
         {
-            return await _context.Movie.Include(m => m.Actors).ToListAsync();
-            
+            return await _context.Movie.Include(m => m.LeadActor).ToListAsync();
+
         }
 
         public async Task<Movie?> GetMovieByIDAsync(int id)
         {
-            var foundMoive = await _context.Movie.FirstOrDefaultAsync(m => m.Id == id);
+            var foundMoive = await _context.Movie.Include(m => m.LeadActor).FirstOrDefaultAsync(m => m.Id == id);
 
             if (foundMoive == null)
                 return null;
@@ -71,17 +68,14 @@ namespace MovieAPI.Repositores
             if (foundMoive == null)
                 return null;
 
-            foreach (var actorID in movie.ActorsList)
-            {
-                var foundActor = await _context.Actor.FirstOrDefaultAsync(a=> a.Id == actorID);
-                if(foundActor == null)
-                    throw new ArgumentException($"Actor with ID {actorID} not found");
-            }
+            var foundActor = await _context.Actor.FirstOrDefaultAsync(a => a.Id == movie.LeadActorID);
+            if (foundActor == null)
+                throw new ArgumentException($"Actor with ID {movie.LeadActorID} not found");
 
             foundMoive.Name = movie.Name;
             foundMoive.ReleasedYear = movie.ReleasedYear;
             foundMoive.IsMyFavourite = movie.IsMyFavourite;
-            foundMoive.ActorsList = movie.ActorsList;
+            foundMoive.LeadActorID = movie.LeadActorID;
 
             await _context.SaveChangesAsync();
             return foundMoive;

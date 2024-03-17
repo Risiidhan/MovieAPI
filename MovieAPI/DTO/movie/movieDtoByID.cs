@@ -1,15 +1,15 @@
+using MovieAPI.DTO.actor;
 
-namespace MovieAPI.Models
+namespace MovieAPI.DTO.movie
 {
-    public class Movie
+    public class movieDtoByID
     {
         public int Id { get; set; }
         public required string Name { get; set; }
         public int? ReleasedYear { get; set; }
         public bool? IsMyFavourite { get; set; }
-        public int LeadActorID { get; set; }
 
         //navigation property
-        public Actor? LeadActor { get; set; }
+        public actorDtoByID? LeadActor { get; set; }
     }
 }

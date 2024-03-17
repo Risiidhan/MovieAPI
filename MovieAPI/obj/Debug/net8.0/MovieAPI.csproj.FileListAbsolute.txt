@@ -273,3 +273,4 @@ E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\refint\MovieAPI.dll
 E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\MovieAPI.pdb
 E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\MovieAPI.genruntimeconfig.cache
 E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\ref\MovieAPI.dll
+E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\MovieAPI.sourcelink.json

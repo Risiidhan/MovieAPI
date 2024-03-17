@@ -11,7 +11,7 @@ namespace MovieAPI.DTO.movie
         public required string Name { get; set; }
         public int? ReleasedYear { get; set; }
         public bool? IsMyFavourite { get; set; }
-        public ICollection<Actor> Actors { get; set; } = new List<Actor>();
+         public int LeadActorID { get; set; }
 
     }
 }

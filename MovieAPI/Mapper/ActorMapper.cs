@@ -5,13 +5,19 @@ namespace MovieAPI.Mapper
 {
     public static class ActorMapper
     {
-        public static actorDto ToActorDto(Actor actor) => new actorDto
+        public static actorDtoByID ToActorDtoByID(Actor actor) => new actorDtoByID
         {
             Id = actor.Id,
             Name = actor.Name,
             Age = actor.Age,
             Gender = actor.Gender,
             Nationality = actor.Nationality
+        };
+
+        public static actorDto ToActorDto(Actor actor) => new actorDto
+        {
+            Id = actor.Id,
+            Name = actor.Name,
         };
 
         public static Actor ToActorModel(actorDtoCreate actorDto) => new Actor
