@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MovieAPI.Data;
 using MovieAPI.DTO.actor;
 using MovieAPI.Interfaces;
 using MovieAPI.Mapper;
-using MovieAPI.Models;
 
 namespace MovieAPI.Controllers
 {
@@ -31,40 +25,50 @@ namespace MovieAPI.Controllers
             return Ok(actorList);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
 
         public async Task<IActionResult> GetActorByID([FromRoute] int id)
         {
             var foundActor = await _actor.GetActorByIDAsync(id);
-            if(foundActor == null)
+            if (foundActor == null)
                 return NotFound($"Actor with ID {id} not found");
-            
-            var foundActorDto = ActorMapper.ToActorDto(foundActor);
+
+            var foundActorDto = ActorMapper.ToActorDtoByID(foundActor);
             return Ok(foundActorDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateActor(actorDtoCreate actorDto){
+        public async Task<IActionResult> CreateActor(actorDtoCreate actorDto)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+                
+            if (!string.IsNullOrEmpty(actorDto.Nationality))
+                actorDto.Nationality = char.ToUpper(actorDto.Nationality[0]) + actorDto.Nationality.Substring(1);
+
             var actor = ActorMapper.ToActorModel(actorDto);
             var createdActor = await _actor.CreateActorAsync(actor);
 
-            if(createdActor == null)
+            if (createdActor == null)
                 return BadRequest();
 
-            var createdActorDto = ActorMapper.ToActorDto(createdActor); 
+            var createdActorDto = ActorMapper.ToActorDtoByID(createdActor);
             return Ok(createdActorDto);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateActor([FromRoute] int id, [FromBody] actorDtoUpdate actorDto)
         {
+            if(!ModelState.IsValid)
+                return BadRequest();
+
             var actor = ActorMapper.ToActorModel(actorDto);
             var updatedActor = await _actor.UpdateActorAsync(id, actor);
 
-            if(updatedActor == null)
+            if (updatedActor == null)
                 return NotFound($"Actor with ID {id} not found");
 
-            var updatedActorDto = ActorMapper.ToActorDto(updatedActor);
+            var updatedActorDto = ActorMapper.ToActorDtoByID(updatedActor);
             return Ok(updatedActorDto);
         }
 
@@ -74,8 +78,8 @@ namespace MovieAPI.Controllers
         {
             var deletedActor = await _actor.DeleteActorAsync(id);
 
-            if(deletedActor == null)
-                return NotFound($"Actor with ID {id} not found");;
+            if (deletedActor == null)
+                return NotFound($"Actor with ID {id} not found"); ;
 
             return Ok(ActorMapper.ToActorDto(deletedActor));
         }

@@ -24,7 +24,7 @@ namespace MovieAPI.Controllers
             return Ok(moiveDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetMovieByID([FromRoute] int id)
         {
             var foundMovie = await _movie.GetMovieByIDAsync(id);
@@ -43,7 +43,7 @@ namespace MovieAPI.Controllers
             return Ok(MovieMapper.ToMovieDto(createdMovie));
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateMovie([FromRoute] int id, [FromBody] movieDtoUpdate movieDto)
         {
             var Movie = MovieMapper.ToMovieModel(movieDto);

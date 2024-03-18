@@ -259,6 +259,7 @@ E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\MovieAPI.AssemblyInfo.cs
 E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\MovieAPI.csproj.CoreCompileInputs.cache
 E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\MovieAPI.MvcApplicationPartsAssemblyInfo.cs
 E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\MovieAPI.MvcApplicationPartsAssemblyInfo.cache
+E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\MovieAPI.sourcelink.json
 E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\staticwebassets.build.json
 E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\staticwebassets.development.json
 E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\staticwebassets\msbuild.MovieAPI.Microsoft.AspNetCore.StaticWebAssets.props
@@ -273,4 +274,3 @@ E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\refint\MovieAPI.dll
 E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\MovieAPI.pdb
 E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\MovieAPI.genruntimeconfig.cache
 E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\ref\MovieAPI.dll
-E:\.NET\moviesAPI\MovieAPI\obj\Debug\net8.0\MovieAPI.sourcelink.json

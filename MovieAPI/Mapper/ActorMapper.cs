@@ -24,7 +24,7 @@ namespace MovieAPI.Mapper
         {
             Name = actorDto.Name,
             Age = actorDto.Age,
-            Gender = actorDto.Gender,
+            Gender = actorDto.Gender.ToString(),
             Nationality = actorDto.Nationality
         };
 
@@ -32,7 +32,7 @@ namespace MovieAPI.Mapper
         {
             Name = actorDto.Name,
             Age = actorDto.Age,
-            Gender = actorDto.Gender,
+            Gender = actorDto.Gender.ToString(),
             Nationality = actorDto.Nationality
         };
     }
