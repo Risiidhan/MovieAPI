@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieAPI.DTO.actor;
+using MovieAPI.Helpers;
 using MovieAPI.Interfaces;
 using MovieAPI.Mapper;
 
@@ -19,9 +20,9 @@ namespace MovieAPI.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> GetAllActors()
+        public async Task<IActionResult> GetAllActors([FromQuery] ActorQueryObject query)
         {
-            var actorList = await _actor.GetActorsAync();
+            var actorList = await _actor.GetActorsAync(query);
             return Ok(actorList);
         }
 
