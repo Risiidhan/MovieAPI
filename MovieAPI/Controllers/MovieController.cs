@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Interfaces;
 using MovieAPI.Mapper;
 using MovieAPI.DTO.movie;
+using MovieAPI.Helpers;
 
 namespace MovieAPI.Controllers
 {
@@ -17,9 +18,9 @@ namespace MovieAPI.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAllMovie()
+        public async Task<IActionResult> GetAllMovie([FromQuery] MovieQueryObject query)
         {
-            var movies = await _movie.GetAllMovieAsync();
+            var movies = await _movie.GetAllMovieAsync(query);
             var moiveDto = movies.Select(movie => MovieMapper.ToMovieDto(movie));
             return Ok(moiveDto);
         }

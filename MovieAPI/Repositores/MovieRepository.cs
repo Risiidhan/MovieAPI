@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MovieAPI.Data;
+using MovieAPI.Helpers;
 using MovieAPI.Models;
 
 namespace MovieAPI.Repositores
@@ -45,10 +46,27 @@ namespace MovieAPI.Repositores
             return foundMoive;
         }
 
-        public async Task<List<Movie>> GetAllMovieAsync()
+        public async Task<List<Movie>> GetAllMovieAsync(MovieQueryObject query)
         {
-            return await _context.Movie.Include(m => m.LeadActor).ToListAsync();
+            
+            var movies = _context.Movie.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(query.Name))
+                movies = movies.Where(a => a.Name.Contains(query.Name));
 
+            if (query.ReleasedYear>1800)
+                movies = movies.Where(m => m.ReleasedYear.HasValue && m.ReleasedYear.Value == query.ReleasedYear);
+
+            if (!string.IsNullOrWhiteSpace(query.SortBy))
+            {
+                if (query.SortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                    movies = query.IsDescending ? movies.OrderByDescending(m => m.Name) : movies.OrderBy(m => m.Name);
+
+                if (query.SortBy.Equals("ReleasedYear", StringComparison.OrdinalIgnoreCase))
+                    movies = query.IsDescending ? movies.OrderByDescending(m => m.ReleasedYear) : movies.OrderBy(a => a.ReleasedYear);
+            }
+
+            var skipNumber = (query.PageNumber-1) * query.PageSize;
+            return await movies.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public async Task<Movie?> GetMovieByIDAsync(int id)
