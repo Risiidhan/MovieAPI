@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MovieAPI.DTO.user;
+using MovieAPI.Interfaces;
 using MovieAPI.Models;
 
 namespace MovieAPI.Controllers
@@ -10,8 +11,10 @@ namespace MovieAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManger;
-        public UserController(UserManager<AppUser> user)
+        private readonly IJwtToken _token;
+        public UserController(UserManager<AppUser> user, IJwtToken token)
         {
+            this._token = token;
             this._userManger = user;
         }
 
@@ -36,7 +39,7 @@ namespace MovieAPI.Controllers
                 {
                     var roleRes = await _userManger.AddToRolesAsync(appUser, new[] { "User" });
                     if(roleRes.Succeeded)
-                        return Ok("User Created");
+                        return Ok(_token.GenerateToken(appUser));
                     else
                         return BadRequest(roleRes.Errors);
                 }

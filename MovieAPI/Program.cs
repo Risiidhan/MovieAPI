@@ -8,6 +8,7 @@ using MovieAPI.Data;
 using MovieAPI.Interfaces;
 using MovieAPI.Models;
 using MovieAPI.Repositores;
+using MovieAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IMovie,MovieRepository>();
 builder.Services.AddScoped<IActor,ActorRepository>();
+builder.Services.AddScoped<IJwtToken, JwtTokenService>();
+
 
 //App User Identity Model
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>{
@@ -47,7 +50,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"])),
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
     });
 
 
