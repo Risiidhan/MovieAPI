@@ -4,6 +4,6 @@ namespace MovieAPI.Interfaces
 {
     public interface IJwtToken
     {
-        string GenerateToken(AppUser user);
+        string GenerateToken(AppUser user, string[] roles);
     }
 }

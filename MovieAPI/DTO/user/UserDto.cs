@@ -13,5 +13,7 @@ namespace MovieAPI.DTO.user
         
         [Required]
         public string? Password { get; set; }
+
+        public string[] Roles { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace MovieAPI.Controllers
 
                 if(createdUser.Succeeded)
                 {
-                    var roleRes = await _userManger.AddToRolesAsync(appUser, new[] { "User" });
+                    var roleRes = await _userManger.AddToRolesAsync(appUser, userDto.Roles);
                     if(roleRes.Succeeded)
                         return Ok("User Registered Successfully!");
                     else
@@ -75,10 +75,11 @@ namespace MovieAPI.Controllers
             if(!result.Succeeded)
                 return Unauthorized("Username or Password is incorrect!");
 
+            var roles = await _userManger.GetRolesAsync(user);
             return Ok(new 
             { 
                 Message = "Login Successful!",
-                Token = _token.GenerateToken(user) 
+                Token = _token.GenerateToken(user, roles.ToArray()) 
             });
         } 
     }

@@ -41,6 +41,8 @@ namespace MovieAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> CreateMovie([FromBody] movieDtoCreate movieDto)
         {
             var movie = MovieMapper.ToMovieModel(movieDto);
@@ -49,6 +51,8 @@ namespace MovieAPI.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> UpdateMovie([FromRoute] int id, [FromBody] movieDtoUpdate movieDto)
         {
             var Movie = MovieMapper.ToMovieModel(movieDto);
@@ -63,6 +67,8 @@ namespace MovieAPI.Controllers
 
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> DeleteMovie(int id)
         {
             var deletedMovie = await _movie.DeleteMovieAsync(id);

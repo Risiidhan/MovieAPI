@@ -41,6 +41,7 @@ namespace MovieAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateActor(actorDtoCreate actorDto)
         {
             if(!ModelState.IsValid)
@@ -60,6 +61,8 @@ namespace MovieAPI.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> UpdateActor([FromRoute] int id, [FromBody] actorDtoUpdate actorDto)
         {
             if(!ModelState.IsValid)
@@ -77,6 +80,8 @@ namespace MovieAPI.Controllers
 
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> DeleteActor(int id)
         {
             var deletedActor = await _actor.DeleteActorAsync(id);

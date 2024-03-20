@@ -16,16 +16,24 @@ namespace MovieAPI.Services
             _config = config;
         }
 
-        public string GenerateToken(AppUser user)
+        public string GenerateToken(AppUser user, string[] roles)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_config["Jwt:Key"]);
-            var identity = new ClaimsIdentity(new Claim[]
+            var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, user.Email),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Name, user.UserName)
-            });
-        
+            };
+
+            // Add roles to the claims
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            var identity = new ClaimsIdentity(claims);
+
             var creds = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
