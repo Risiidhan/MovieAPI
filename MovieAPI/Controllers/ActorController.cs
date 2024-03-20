@@ -21,7 +21,6 @@ namespace MovieAPI.Controllers
 
 
         [HttpGet]
-
         public async Task<IActionResult> GetAllActors([FromQuery] ActorQueryObject query)
         {
             var actorList = await _actor.GetActorsAync(query);
