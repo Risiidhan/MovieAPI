@@ -4,11 +4,15 @@ using Interfaces;
 using MovieAPI.Mapper;
 using MovieAPI.DTO.movie;
 using MovieAPI.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MovieAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+
+
     public class MovieController : ControllerBase
     {
         private readonly IMovie _movie;

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieAPI.DTO.actor;
 using MovieAPI.Helpers;
@@ -8,6 +9,7 @@ namespace MovieAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class ActorController : ControllerBase
     {
         private readonly IActor _actor;
