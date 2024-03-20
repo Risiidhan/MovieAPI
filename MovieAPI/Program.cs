@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MovieAPI.Data;
 using MovieAPI.Interfaces;
+using MovieAPI.Middleware;
 using MovieAPI.Models;
 using MovieAPI.Repositores;
 using MovieAPI.Services;
@@ -94,6 +95,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
