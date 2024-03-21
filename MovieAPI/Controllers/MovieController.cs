@@ -46,7 +46,7 @@ namespace MovieAPI.Controllers
         public async Task<IActionResult> CreateMovie([FromBody] movieDtoCreate movieDto)
         {
             var movie = MovieMapper.ToMovieModel(movieDto);
-            var createdMovie = await _movie.CreateMovieAsync(movie);
+            var createdMovie = await _movie.CreateMovieAsync(movie, movieDto.ActorIds);
             return Ok(MovieMapper.ToMovieDto(createdMovie));
         }
 
@@ -56,7 +56,7 @@ namespace MovieAPI.Controllers
         public async Task<IActionResult> UpdateMovie([FromRoute] int id, [FromBody] movieDtoUpdate movieDto)
         {
             var Movie = MovieMapper.ToMovieModel(movieDto);
-            var updatedMovie = await _movie.UpdateMovieAsync(id, Movie);
+            var updatedMovie = await _movie.UpdateMovieAsync(id, Movie, movieDto.ActorIds);
 
             if(updatedMovie == null)
                 return NotFound($"Movie with ID {id} not found");

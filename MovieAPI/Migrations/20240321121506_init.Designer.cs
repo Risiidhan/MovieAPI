@@ -12,8 +12,8 @@ using MovieAPI.Data;
 namespace MovieAPI.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240316174702_actorlist")]
-    partial class actorlist
+    [Migration("20240321121506_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,9 +40,6 @@ namespace MovieAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MovieId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -51,8 +48,6 @@ namespace MovieAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
 
                     b.ToTable("Actor");
                 });
@@ -64,10 +59,6 @@ namespace MovieAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ActorsList")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsMyFavourite")
                         .HasColumnType("bit");
@@ -84,16 +75,43 @@ namespace MovieAPI.Migrations
                     b.ToTable("Movie");
                 });
 
-            modelBuilder.Entity("MovieAPI.Models.Actor", b =>
+            modelBuilder.Entity("MovieAPI.Models.MovieActor", b =>
                 {
-                    b.HasOne("MovieAPI.Models.Movie", null)
-                        .WithMany("Actors")
-                        .HasForeignKey("MovieId");
+                    b.Property<int>("MovieID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ActorID")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieID", "ActorID");
+
+                    b.HasIndex("ActorID");
+
+                    b.ToTable("MovieActor");
+                });
+
+            modelBuilder.Entity("MovieAPI.Models.MovieActor", b =>
+                {
+                    b.HasOne("MovieAPI.Models.Actor", "Actor")
+                        .WithMany()
+                        .HasForeignKey("ActorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MovieAPI.Models.Movie", "Movie")
+                        .WithMany("MovieActors")
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Actor");
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("MovieAPI.Models.Movie", b =>
                 {
-                    b.Navigation("Actors");
+                    b.Navigation("MovieActors");
                 });
 #pragma warning restore 612, 618
         }

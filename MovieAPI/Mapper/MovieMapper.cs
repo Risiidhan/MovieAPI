@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using MovieAPI.DTO.movie;
 using MovieAPI.Models;
 
@@ -15,8 +12,7 @@ namespace MovieAPI.Mapper
             Name = movie.Name,
             ReleasedYear = movie.ReleasedYear,
             IsMyFavourite = movie.IsMyFavourite,
-            LeadActor = movie.LeadActor != null ? ActorMapper.ToActorDto(movie.LeadActor) : null
-
+            Actors = movie.MovieActors.Select(ma => ActorMapper.ToActorDto(ma.Actor)).ToList()
         };
 
         public static movieDtoByID ToMovieDtoByID(Movie movie) => new movieDtoByID
@@ -25,8 +21,7 @@ namespace MovieAPI.Mapper
             Name = movie.Name,
             ReleasedYear = movie.ReleasedYear,
             IsMyFavourite = movie.IsMyFavourite,
-            LeadActor = movie.LeadActor != null ? ActorMapper.ToActorDtoByID(movie.LeadActor) : null
-
+            Actors = movie.MovieActors.Select(ma => ActorMapper.ToActorDtoByID(ma.Actor)).ToList()
         };
 
         public static Movie ToMovieModel(movieDtoCreate movieCreateDto) => new Movie
@@ -34,7 +29,9 @@ namespace MovieAPI.Mapper
             Name = movieCreateDto.Name,
             ReleasedYear = movieCreateDto.ReleasedYear,
             IsMyFavourite = movieCreateDto.IsMyFavourite,
-            LeadActorID = movieCreateDto.LeadActorID
+            // Since the movie creation DTO now contains a list of actor IDs,
+            // you need to map these IDs to MovieActor entities.
+            MovieActors = movieCreateDto.ActorIds.Select(actorId => new MovieActor { ActorID = actorId }).ToList()
         };
 
         public static Movie ToMovieModel(movieDtoUpdate movieUpdateDto) => new Movie
@@ -42,7 +39,7 @@ namespace MovieAPI.Mapper
             Name = movieUpdateDto.Name,
             ReleasedYear = movieUpdateDto.ReleasedYear,
             IsMyFavourite = movieUpdateDto.IsMyFavourite,
-            LeadActorID = movieUpdateDto.LeadActorID
+            MovieActors = movieUpdateDto.ActorIds.Select(actorId => new MovieActor { ActorID = actorId }).ToList()
         };
     }
 }

@@ -60,9 +60,6 @@ namespace MovieAPI.Migrations
                     b.Property<bool?>("IsMyFavourite")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LeadActorID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -72,20 +69,46 @@ namespace MovieAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LeadActorID");
-
                     b.ToTable("Movie");
+                });
+
+            modelBuilder.Entity("MovieAPI.Models.MovieActor", b =>
+                {
+                    b.Property<int>("MovieID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ActorID")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieID", "ActorID");
+
+                    b.HasIndex("ActorID");
+
+                    b.ToTable("MovieActor");
+                });
+
+            modelBuilder.Entity("MovieAPI.Models.MovieActor", b =>
+                {
+                    b.HasOne("MovieAPI.Models.Actor", "Actor")
+                        .WithMany()
+                        .HasForeignKey("ActorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MovieAPI.Models.Movie", "Movie")
+                        .WithMany("MovieActors")
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Actor");
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("MovieAPI.Models.Movie", b =>
                 {
-                    b.HasOne("MovieAPI.Models.Actor", "LeadActor")
-                        .WithMany()
-                        .HasForeignKey("LeadActorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("LeadActor");
+                    b.Navigation("MovieActors");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using MovieAPI.Models;
+
 
 namespace MovieAPI.DTO.movie
 {
@@ -20,9 +16,7 @@ namespace MovieAPI.DTO.movie
         public required string Name { get; set; }
         public int? ReleasedYear { get; set; }
         public bool? IsMyFavourite { get; set; }
-
-        [Required(ErrorMessage = $"LeadActorID {RequiredSentence}")]
-        public int LeadActorID { get; set; }
+        public List<int> ActorIds { get; set; }
 
     }
 }

@@ -9,9 +9,6 @@ namespace MovieAPI.DTO.movie
         public required string Name { get; set; }
         public int? ReleasedYear { get; set; }
         public bool? IsMyFavourite { get; set; }
-
-        //navigation property
-        public actorDto? LeadActor { get; set; }
-
+        public ICollection<actorDto> Actors { get; set; }
     }
 }

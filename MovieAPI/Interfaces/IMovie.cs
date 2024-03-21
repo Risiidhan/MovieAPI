@@ -7,8 +7,8 @@ namespace Interfaces
     {
         Task<List<Movie>> GetAllMovieAsync(MovieQueryObject query);
         public Task<Movie?> GetMovieByIDAsync(int id);
-        public Task<Movie> CreateMovieAsync(Movie movie);
-        public Task<Movie?> UpdateMovieAsync(int id, Movie movie);
+        public Task<Movie> CreateMovieAsync(Movie movie, List<int> actorIds);
+        public Task<Movie?> UpdateMovieAsync(int id, Movie movie, List<int> actorIds);
         public Task<Movie?> DeleteMovieAsync(int id);
 
     }
